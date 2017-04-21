@@ -15,14 +15,15 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Particles extends Application {
 
-    private static final int ANIMATION_SECONDS = 4;
+    private static final int ANIMATION_SECONDS = 1;
 
     private Random random = new Random();
 
-    private Digit[] digits = new Digit[10];
+    private Digit[] digits = new Digit[getDigits() + 1];
     private int currentIndex = -1;
 
     private GraphicsContext g;
@@ -30,6 +31,13 @@ public class Particles extends Application {
 
     private List<Particle> particles = new ArrayList<>();
     private int maxParticles = 0;
+    
+    public static int getDigits() {
+    	System.out.println("Count to what number?");
+    	Scanner sc = new Scanner(System.in);
+    	int digits = sc.nextInt();
+		return digits;
+    }
 
     private Parent createContent() {
 
@@ -52,7 +60,6 @@ public class Particles extends Application {
             }
         };
         timer.start();
-
         return root;
     }
 
@@ -88,26 +95,6 @@ public class Particles extends Application {
                 p.dx /= ANIMATION_SECONDS * 60 * random.nextDouble();
                 p.dy /= ANIMATION_SECONDS * 60 * random.nextDouble();
             });
-
-//            for (int i = 0; i < particles.size(); i++) {
-//                Particle p = particles.get(i);
-//
-//                if (i < digits[currentIndex].positions.size()) {
-//                    Point2D point = digits[currentIndex].positions.get(i);
-//
-//                    p.nextX = point.getX();
-//                    p.nextY = point.getY();
-//                } else {
-//                    p.nextX = 0;
-//                    p.nextY = 0;
-//                }
-//
-//                p.dx = p.nextX - p.x;
-//                p.dy = p.nextY - p.y;
-//                p.dx /= ANIMATION_SECONDS * 60;
-//                p.dy /= ANIMATION_SECONDS * 60;
-//            }
-
             time = 0;
         }
 
@@ -147,8 +134,6 @@ public class Particles extends Application {
         for (int i = 0; i < maxParticles; i++) {
             particles.add(new Particle(i));
         }
-
-        //Collections.shuffle(particles);
     }
 
     private static class Digit {
@@ -196,5 +181,7 @@ public class Particles extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        
+        
     }
 }
